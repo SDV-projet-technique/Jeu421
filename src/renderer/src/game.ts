@@ -19,13 +19,19 @@ export class Game {
     this.losses = losses
   }
 
-  private rollDice(): number {
+  rollDice(): number {
     return Math.floor(Math.random() * 6) + 1
   }
 
   rollDiceNumber(number: number): Game {
     const newDices = [...this.dices]
     newDices[number] = this.rollDice()
+    const newGame = new Game(newDices, 'playing', this.score, this.wins, this.losses)
+    return newGame.checkGameState()
+  }
+
+  rollAllSix(): Game {
+    const newDices = this.dices.map((dice) => (dice === 6 ? this.rollDice() : dice))
     const newGame = new Game(newDices, 'playing', this.score, this.wins, this.losses)
     return newGame.checkGameState()
   }

@@ -1,11 +1,35 @@
 import { Game } from '@renderer/game'
 import { useState } from 'react'
 import Dice from './dice'
+import { useEffect } from 'react'
 
 export function GameDisplay({ name }: { name: string }) {
   const [game, setGame] = useState(new Game())
+  const [isAnimating, setIsAnimating] = useState(false)
 
-  console.log(game.getGameState())
+  const [animatedDices, setAnimatedDices] = useState(game.getDices())
+
+  useEffect(() => {
+    setAnimatedDices(game.getDices())
+  }, [game])
+
+  function animateAll() {
+    const interval = setInterval(() => {
+      setAnimatedDices([game.rollDice(), game.rollDice(), game.rollDice()])
+    }, 50)
+    setTimeout(() => {
+      clearInterval(interval)
+    }, 1000)
+  }
+
+  function animateSix() {
+    const interval = setInterval(() => {
+      setAnimatedDices(game.getDices().map((dice) => (dice === 6 ? game.rollDice() : dice)))
+    }, 50)
+    setTimeout(() => {
+      clearInterval(interval)
+    }, 1000)
+  }
 
   return (
     <div className="h-full w-full flex flex-col items-center">
@@ -21,8 +45,14 @@ export function GameDisplay({ name }: { name: string }) {
       {game.getGameState() === 'not started' && (
         <button
           onClick={() => {
-            setGame(game.rollAll())
+            setIsAnimating(true)
+            animateAll()
+            setTimeout(() => {
+              setIsAnimating(false)
+              setGame(game.rollAll())
+            }, 1000)
           }}
+          disabled={isAnimating}
         >
           Lancer les dés
         </button>
@@ -30,20 +60,22 @@ export function GameDisplay({ name }: { name: string }) {
       {game.getGameState() === 'playing' && (
         <button
           onClick={() => {
-            game.getDices().forEach((dice, index) => {
-              if (dice === 6) {
-                setGame(game.rollDiceNumber(index))
-              }
-            })
+            setIsAnimating(true)
+            animateSix()
+            setTimeout(() => {
+              setIsAnimating(false)
+              setGame(game.rollAllSix())
+            }, 1000)
           }}
+          disabled={isAnimating}
         >
           6 ! relance le(s) dé(s)
         </button>
       )}
       <div className="flex flex-col h-full w-full items-center gap-4 pt-2">
-        <Dice value={game.getDices()[0]} />
-        <Dice value={game.getDices()[1]} />
-        <Dice value={game.getDices()[2]} />
+        <Dice value={isAnimating ? animatedDices[0] : game.getDices()[0]} />
+        <Dice value={isAnimating ? animatedDices[1] : game.getDices()[1]} />
+        <Dice value={isAnimating ? animatedDices[2] : game.getDices()[2]} />
       </div>
     </div>
   )

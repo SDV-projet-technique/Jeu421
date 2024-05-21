@@ -41,24 +41,9 @@ export function GameDisplay({ name }: { name: string }) {
         </button>
       )}
       <div className="flex flex-col h-full w-full items-center gap-4 pt-2">
-        <Dice
-          number={1}
-          value={game.getDices()[0]}
-          roll={() => setGame(game.rollDiceNumber(0))}
-          canRoll={game.getDices()[0] === 6}
-        />
-        <Dice
-          number={2}
-          value={game.getDices()[1]}
-          roll={() => setGame(game.rollDiceNumber(1))}
-          canRoll={game.getDices()[1] === 6}
-        />
-        <Dice
-          number={3}
-          value={game.getDices()[2]}
-          roll={() => setGame(game.rollDiceNumber(2))}
-          canRoll={game.getDices()[2] === 6}
-        />
+        <Dice value={game.getDices()[0]} />
+        <Dice value={game.getDices()[1]} />
+        <Dice value={game.getDices()[2]} />
       </div>
     </div>
   )

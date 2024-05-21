@@ -9,7 +9,7 @@ function App(): JSX.Element {
 
   return (
     <div>
-      <h1>Jeu du 421</h1>
+      <h1>Jeu du 421 - score : {game.getScore()}</h1>
       {game.getGameState() === 'game over' && (
         <>
           <h2>Perdu</h2>

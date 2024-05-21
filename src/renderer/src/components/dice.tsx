@@ -10,11 +10,11 @@ export default function Dice({
   canRoll: boolean
 }) {
   return (
-    <div>
-      <h1>Dé {number}</h1>
-      <h2>{value}</h2>
+    <div className="flex flex-col items-center justify-center border-2 border-black rounded-md max-w-fit p-6 aspect-square">
+      <h2>Dé {number}</h2>
+      <h3>{value}</h3>
       <button onClick={roll} disabled={!canRoll}>
-        Lancé
+        Lancer
       </button>
     </div>
   )

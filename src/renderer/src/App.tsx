@@ -9,35 +9,38 @@ function GameDisplay({ name }: { name: string }) {
 
   return (
     <div className="h-full w-full flex flex-col items-center">
-      <h3>
+      <h3 className="text-center">
         {name} - score : {game.getScore()} - wins : {game.getWins()}, losses : {game.getLosses()}
       </h3>
       {game.getGameState() === 'game over' && (
-        <>
-          <p>Perdu</p>
-          <button onClick={() => setGame(game.resetGame())}>rejouer</button>
-        </>
+        <button onClick={() => setGame(game.resetGame())}>Perdu ! Rejouer</button>
       )}
       {game.getGameState() === 'win' && (
-        <>
-          <p>Gagné</p>
-          <button onClick={() => setGame(game.resetGame())}>rejouer</button>
-        </>
+        <button onClick={() => setGame(game.resetGame())}>Gagné ! Rejouer</button>
       )}
       {game.getGameState() === 'not started' && (
-        <>
-          <button
-            onClick={() => {
-              setGame(game.rollAll())
-            }}
-            disabled={game.getGameState() !== 'not started'}
-          >
-            Lancer les dés
-          </button>
-        </>
+        <button
+          onClick={() => {
+            setGame(game.rollAll())
+          }}
+        >
+          Lancer les dés
+        </button>
       )}
-      {game.getGameState() === 'playing' && <p>Tu as fait un 6 ! Relance le dé !</p>}
-      <div className="flex flex-col h-full w-full items-center">
+      {game.getGameState() === 'playing' && (
+        <button
+          onClick={() => {
+            game.getDices().forEach((dice, index) => {
+              if (dice === 6) {
+                setGame(game.rollDiceNumber(index))
+              }
+            })
+          }}
+        >
+          6 ! relance le(s) dé(s)
+        </button>
+      )}
+      <div className="flex flex-col h-full w-full items-center gap-4 pt-2">
         <Dice
           number={1}
           value={game.getDices()[0]}
@@ -67,7 +70,7 @@ function App() {
   const [newName, setNewName] = useState('')
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center gap-2">
       <h1>Jeu du 421</h1>
       <h2 className="text-center">
         les règles : Lancez les dés et tentez d'obtenir 4, 2 et 1. Si vous faites un 6, vous pouvez

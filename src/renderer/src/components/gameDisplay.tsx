@@ -33,9 +33,6 @@ export function GameDisplay({ name }: { name: string }) {
 
   return (
     <div className="h-full w-full flex flex-col items-center">
-      <h3 className="text-center">
-        {name} - score : {game.getScore()} - wins : {game.getWins()}, losses : {game.getLosses()}
-      </h3>
       {game.getGameState() === 'game over' && (
         <button onClick={() => setGame(game.resetGame())}>Perdu ! Rejouer</button>
       )}
@@ -77,6 +74,9 @@ export function GameDisplay({ name }: { name: string }) {
         <Dice value={isAnimating ? animatedDices[1] : game.getDices()[1]} />
         <Dice value={isAnimating ? animatedDices[2] : game.getDices()[2]} />
       </div>
+      <h3 className="text-center">
+        {name} - score : {game.getScore()} - wins : {game.getWins()}, losses : {game.getLosses()}
+      </h3>
     </div>
   )
 }

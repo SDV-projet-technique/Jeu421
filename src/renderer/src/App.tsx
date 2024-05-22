@@ -12,7 +12,7 @@ function App() {
       <h2 className="border border-black p-3 text-center w-11/12 mx-auto text-lg bg-white rounded">
         <span className="underline text-xl font-bold">Comment jouer ?</span>
         <br />
-        Lancez les dés, le but est d'obtenir un 4, un 2 et 1 peut importe l'ordre. <br />
+        Lancez les dés, le but est d'obtenir un 4, un 2 et un 1 peut importe l'ordre. <br />
         Si vous faites un 6, vous pouvez relancer le dé.
       </h2>
       <div className="h-full w-full flex flex-row justify-around">
@@ -25,6 +25,7 @@ function App() {
               className="my-3"
               onSubmit={(e) => {
                 e.preventDefault()
+                if (newName === '' || players.includes(newName)) return
                 players.length < 3 && setPlayers([...players, newName])
                 setNewName('')
               }}
@@ -36,7 +37,7 @@ function App() {
                 maxLength={20}
                 onChange={(e) => players.length < 3 && setNewName(e.target.value)}
               />
-              {players.length < 3 ? (
+              {players.length < 3 && !players.includes(newName) ? (
                 <button className="p-1 rounded-r bg-amber-200 hover:bg-amber-100">Ajouter</button>
               ) : (
                 <button className="p-1 rounded-r bg-gray-300 text-gray-500 cursor-not-allowed">

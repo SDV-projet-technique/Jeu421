@@ -1,7 +1,6 @@
 import { Game } from '@renderer/game'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Dice from './dice'
-import { useEffect } from 'react'
 
 export function GameDisplay({ name }: { name: string }) {
   const [game, setGame] = useState(new Game())
@@ -32,15 +31,26 @@ export function GameDisplay({ name }: { name: string }) {
   }
 
   return (
-    <div className="h-full w-full flex flex-col items-center">
+    <div className="h-full w-full flex flex-col items-center mt-2">
       {game.getGameState() === 'game over' && (
-        <button onClick={() => setGame(game.resetGame())}>Perdu ! Rejouer</button>
+        <button
+          className="bg-red-300 hover:bg-red-200 p-2 rounded cursor-pointer"
+          onClick={() => setGame(game.resetGame())}
+        >
+          Perdu ! Rejouer
+        </button>
       )}
       {game.getGameState() === 'win' && (
-        <button onClick={() => setGame(game.resetGame())}>Gagné ! Rejouer</button>
+        <button
+          className="bg-green-300 hover:bg-green-200 p-2 rounded cursor-pointer"
+          onClick={() => setGame(game.resetGame())}
+        >
+          Gagné ! Rejouer
+        </button>
       )}
       {game.getGameState() === 'not started' && (
         <button
+          className="bg-blue-300 hover:bg-blue-200 p-2 rounded cursor-pointer"
           onClick={() => {
             setIsAnimating(true)
             animateAll()
@@ -56,6 +66,7 @@ export function GameDisplay({ name }: { name: string }) {
       )}
       {game.getGameState() === 'playing' && (
         <button
+          className="bg-yellow-300 hover:bg-yellow-100 p-2 rounded cursor-pointer"
           onClick={() => {
             setIsAnimating(true)
             animateSix()
@@ -69,13 +80,18 @@ export function GameDisplay({ name }: { name: string }) {
           6 ! relance le(s) dé(s)
         </button>
       )}
-      <div className="flex flex-col h-full w-full items-center gap-4 pt-2">
+      <div className="flex h-max w-full items-center justify-center gap-4 pt-2 my-3">
         <Dice value={isAnimating ? animatedDices[0] : game.getDices()[0]} />
         <Dice value={isAnimating ? animatedDices[1] : game.getDices()[1]} />
         <Dice value={isAnimating ? animatedDices[2] : game.getDices()[2]} />
       </div>
       <h3 className="text-center">
-        {name} - score : {game.getScore()} - wins : {game.getWins()}, losses : {game.getLosses()}
+        <span className="text-4xl">🙋‍♂️ {name} 🙋‍♀️</span> <br />
+        <span className="text-xl">
+          Wins: {game.getWins()} | Losses: {game.getLosses()}
+        </span>{' '}
+        <br />
+        <span className="font-bold text-2xl">Score: {game.getScore()} </span>
       </h3>
     </div>
   )

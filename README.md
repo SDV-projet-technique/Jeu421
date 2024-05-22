@@ -32,3 +32,20 @@ $ pnpm build:mac
 # For Linux
 $ pnpm build:linux
 ```
+
+#Niveau 1
+
+- [x] Méchanique de base (on lance 3 dès)
+- [x] Détéction de victoire si on fait 4, 2, 1 (ordre non important)
+- [x] Relance des dès qui ont fait 6
+
+#Niveau 2
+
+- [x] Système de points/sauvegarde
+- [x] Utilisations de POO
+- [x] Option pour rejouer
+
+#Niveau 3
+
+- [x] Interface utilisateur (2D OU 3D)
+- [x] Option multi joueur

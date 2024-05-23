@@ -8,7 +8,7 @@ function App() {
 
   return (
     <div className="flex flex-col items-center gap-2 w-screen h-screen bg-blue-100">
-      <h1 className="bg-amber-200 p-3 w-full font-bold text-3xl">Jeu du 421</h1>
+      <h1 className="bg-amber-200 p-3 w-full font-bold text-3xl mb-4">Jeu du 421</h1>
       <h2 className="border border-black p-3 text-center w-11/12 mx-auto text-lg bg-white rounded">
         <span className="underline text-xl font-bold">Comment jouer ?</span>
         <br />

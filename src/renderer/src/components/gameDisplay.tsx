@@ -85,14 +85,27 @@ export function GameDisplay({ name }: { name: string }) {
         <Dice value={isAnimating ? animatedDices[1] : game.getDices()[1]} />
         <Dice value={isAnimating ? animatedDices[2] : game.getDices()[2]} />
       </div>
-      <h3 className="text-center">
-        <span className="text-4xl">🙋‍♂️ {name} 🙋‍♀️</span> <br />
-        <span className="text-xl">
-          Wins: {game.getWins()} | Losses: {game.getLosses()}
-        </span>{' '}
-        <br />
-        <span className="font-bold text-2xl">Score: {game.getScore()} </span>
-      </h3>
+      <table className="text-center bg-white">
+        <thead>
+          <tr>
+            <th className="border border-black px-2">Victoires</th>
+            <th className="border border-black px-2">Défaites</th>
+            <th className="border border-black px-2">Score</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td className="border border-black">{game.getWins()}</td>
+            <td className="border border-black">{game.getLosses()}</td>
+            <td className="border border-black">{game.getScore()}</td>
+          </tr>
+          <tr>
+            <td colSpan={3} className="border border-black text-xl font-bold">
+              {name}
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   )
 }
